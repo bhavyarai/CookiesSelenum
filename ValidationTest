@@ -1,0 +1,36 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+import time
+
+s = Service('C:/Development/chromedriver.exe')
+# driver = webdriver.Chrome(service=s)
+
+# Open chrome incognito, full window
+chrome_options = Options()
+chrome_options.add_argument("--incognito")
+
+driver = webdriver.Chrome(options=chrome_options, service=s)
+driver.maximize_window()
+driver.get('https://www.flipkart.com/')
+# refresh
+
+# Type ‘shoes’ in the search textbox and click on the Search button. [search parameter should be retrieved from a data source]
+
+# close login form
+x_close = driver.find_element(by=By.XPATH, value='/html/body/div[2]/div/div/button')
+x_close.click()
+
+# find search box
+search_box = driver.find_element(by=By.NAME, value="q")
+search_box.send_keys("shoes")
+search_box.send_keys(Keys.ENTER)
+
+# find sort bu price low to high
+sort = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[3]/div[1]/div[2]/div[1]/div/div/div[2]/div[3]')
+sort.click()
+
+time.sleep(5)
+driver.quit()
